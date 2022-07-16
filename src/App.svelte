@@ -4,8 +4,8 @@
 
 	let nameEntered = false;
 
-	let firstName = ""
-	let lastName = ""
+	let firstName = "Kaspar"
+	let lastName = "Jindrich"
 	$: fullName = firstName + " " + lastName
 
 	function handleSubmit() {
