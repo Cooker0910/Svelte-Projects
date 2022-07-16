@@ -1,10 +1,38 @@
 <script>
-	export let name;
+	import ToDoInputForm from "./Components/ToDoInputForm.svelte";
+	import ToDoList from "./Components/ToDoList.svelte"
+
+	let nameEntered = false;
+
+	let firstName = ""
+	let lastName = ""
+	$: fullName = firstName + " " + lastName
+
+	function handleSubmit() {
+		if (firstName && lastName) {
+			nameEntered = true;
+		}
+	}
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	{#if nameEntered}
+		<h1>Welcome to task Manager, {fullName}!</h1>
+		<ToDoInputForm userName={fullName} />
+		<ToDoList />
+	{:else}
+		<h1>Welcome to task manager!</h1>
+		<h3>Please enter your name:</h3>
+		<form on:submit|preventDefault={handleSubmit}>
+			<div>
+				<input bind:value={firstName} type="text" placeholder="First Name" required />
+			</div>
+			<div>
+				<input bind:value={lastName} type="text" placeholder="Last Name" required />
+			</div>
+			<buttom on:click={handleSubmit}>Start managing tasks</buttom>
+		</form>
+	{/if}
 </main>
 
 <style>
@@ -15,16 +43,4 @@
 		margin: 0 auto;
 	}
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
 </style>
